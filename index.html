@@ -229,7 +229,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/16/test/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/15/tf-idf/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="刘晨晨">
@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/07/16/test/" itemprop="url">test</a></h1>
+                <a class="post-title-link" href="/2018/09/15/tf-idf/" itemprop="url">TF-IDF</a></h1>
         
 
         <div class="post-meta">
@@ -260,8 +260,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T20:57:25-04:00">
-                2018-07-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-15T05:06:54+08:00">
+                2018-09-15
               </time>
             
 
@@ -300,18 +300,783 @@
       
         
           
-            <script type="math/tex; mode=display">
-\begin{eqnarray}
-\nabla\cdot\vec{E} &=& \frac{\rho}{\epsilon_0} \\
-\nabla\cdot\vec{B} &=& 0 \\
-\nabla\times\vec{E} &=& -\frac{\partial B}{\partial t} \\
-\nabla\times\vec{B} &=& \mu_0\left(\vec{J}+\epsilon_0\frac{\partial E}{\partial t} \right)
-\end{eqnarray}</script><p>npm install hexo-math —save</p>
-<p>把 mathjax 使能为true， cdn 设置为 //cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML<br>除了在next主题中打开mathjax之外，<br>需要在站点配置文件里面配置math：<br>math:<br>  engine: ‘mathjax’ # or ‘katex’<br>  mathjax:<br>    src: custom_mathjax_source<br>    config:</p>
-<pre><code>  # MathJax config
-</code></pre><p>  katex:<br>    css: custom_css_source<br>    js: custom_js_source # not used<br>    config:</p>
-<pre><code>  # KaTeX config
-</code></pre>
+            <p>tf-idf是搜索和提取关键词的常用技术，这里详细记录了tf-idf的公式意义</p>
+<h2 id="Term-Frequency-TF-Weighting"><a href="#Term-Frequency-TF-Weighting" class="headerlink" title="Term Frequency (TF) Weighting"></a>Term Frequency (TF) Weighting</h2><ul>
+<li>Idea: 如果在一个doc中，一个词出现更多次，那么这个词就更重要</li>
+<li>Formulas:<ul>
+<li>c(t, d) 表示在doc d中，词t出现的次数</li>
+<li>Raw TF: TF(t, d) = c(t, d)</li>
+</ul>
+</li>
+<li>一般情况下我们需要平滑：<ul>
+<li>Log TF: TF(t, d) = log(c(t, d) + 1)</li>
+<li>Maximum Frequency normalizarion:<script type="math/tex; mode=display">TF(t, d) = 0.5 + \frac{0.5 \cdot c(t, d)}{MaxFreq(d)}</script></li>
+<li>TF in Okapi/BM25:<script type="math/tex; mode=display">TF(t, d) = \frac{k \cdot c(t, d)}{c(t, d) + k(1 - b + b \cdot length(d) / avg\_dl)}</script>其中, k, b是可调节的参数，根据经验，k一般取值在1.2到2.0之间，b一般为0.75. avg_dl是这个doc collection里的平均文件长度</li>
+</ul>
+</li>
+</ul>
+<p>为什么需要平滑TF? 因为不同的doc长度不同，同一个词出现多次，后面出现的次数的信息量不如第一次出现多，所以我们一般需要惩罚长文本，但是又要避免过分惩罚</p>
+<p><img src="https://raw.githubusercontent.com/BellaLiu112/MarkDownPhotos/master/TF-Normalization.png" alt="TF Normalization"></p>
+<h2 id="Inverted-Document-Frequency-IDF-Weighting"><a href="#Inverted-Document-Frequency-IDF-Weighting" class="headerlink" title="Inverted Document Frequency (IDF) Weighting"></a>Inverted Document Frequency (IDF) Weighting</h2><ul>
+<li>Idea: 如果一个单词只出现在更少部分doc中，那么它含有更多信息</li>
+<li>Formula:<ul>
+<li><script type="math/tex; mode=display">IDF(t) = 1 + log(\frac{n}{k})</script>其中， n是一个collection中的doc数量，k是collection中出现过单词t的doc数量<br>每个词的IDF是和具体哪个doc无关的，而TF是有关的</li>
+</ul>
+</li>
+</ul>
+<h2 id="TF-IDF-Weighting"><a href="#TF-IDF-Weighting" class="headerlink" title="TF-IDF Weighting"></a>TF-IDF Weighting</h2><ul>
+<li>TF-IDF Weighting<ul>
+<li>weight(t, d) = TF(t, d) * IDF(t)</li>
+<li>Term is common in doc -&gt; high tf -&gt; high weight</li>
+<li>Term is rare in collection -&gt; high idf -&gt; high weight</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/01/logistic-regression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘晨晨">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刘二毛的窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/01/logistic-regression/" itemprop="url">logistic_regression</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-01T16:31:15+08:00">
+                2018-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本文记录了Logistics Regression 的具体推导过程</p>
+<p>logistic regression 的 cost function采用的是cross entropy,没有采用均方误差，据说因为用了cross entropy 就是凸优化，方便梯度下降求出最小值。</p>
+<p>logistic regression可以看做一个二分类，它的最大似然函数是:<script type="math/tex">\prod_{i=1}^m \hat{y_i}^{y}(1 - \hat{y_i})^{1-y}</script><br>对数似然是:<script type="math/tex">\Sigma_{i=1}^m y_i\log \hat{y_i} + (1 - y_i) \log (1 - \hat{y_i})</script><br>损失函数就是负的最大似然函数，求解损失函数的最小值就是求解最大似然函数的最大值。<br>所以损失函数是：<script type="math/tex">J = -\frac{1}{m}\Sigma_{i=1}^m [y_i\log \hat{y_i} + (1 - y_i) \log(1 - \hat{y_i})]</script></p>
+<p>在前馈计算概率$\hat{y_i}$时：</p>
+<script type="math/tex; mode=display">z = wx + b</script><script type="math/tex; mode=display">\hat{y} = \sigma(z)</script><p>反向计算梯度时：</p>
+<script type="math/tex; mode=display">\frac{\partial J}{\partial \hat{y_i}} = -\frac{1}{m}[\frac{y_i}{\hat{y_i}} + \frac{1 - y_i}{1 - \hat{y_i}}]</script><script type="math/tex; mode=display">\frac{\partial J}{\partial z_i} = \frac{1}{m}\frac{\partial J}{\partial \hat{y_i}} \cdot \frac{\partial \hat{y_i}}{\partial z_i} = \frac{1}{m}(\hat{y_i} - y_i)</script><script type="math/tex; mode=display">\frac{\partial J}{\partial w} = \frac{1}{m}\Sigma_{i=1}^m \frac{\partial J}{\partial z_i} \cdot \frac{\partial z_i}{\partial w} = \Sigma_{i=1}^m x_i(\hat{y_i} - y_i)</script><script type="math/tex; mode=display">\frac{\partial J}{\partial b} = \frac{1}{m}\Sigma_{i=1}^m \frac{\partial J}{\partial z_i} \cdot \frac{\partial z_i}{\partial b} = \Sigma_{i=1}^m(\hat{y_i} - y_i)</script><p>假设学习率为 $\alpha$, 所以训练Logistics Regression 的整个过程就是:<br>x, y= input_data<br>初始化 w, b<br>Repeat:</p>
+<script type="math/tex; mode=display">z = wx + b</script><script type="math/tex; mode=display">\hat{y} = \sigma(z)</script><script type="math/tex; mode=display">w := w - \alpha \cdot \frac{\partial J}{\partial w}</script><script type="math/tex; mode=display">b := b - \alpha \cdot \frac{\partial J}{\partial b}</script><p>Until：<br>算法收敛或者达到最大迭代步数</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/14/yield/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘晨晨">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刘二毛的窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/14/yield/" itemprop="url">Python yield 关键字</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-14T10:16:00+08:00">
+                2018-08-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>百度了yield的用法，感觉说的都不是很清楚，查了英文的资料，记录一下。</p>
+<h3 id="Iterable"><a href="#Iterable" class="headerlink" title="Iterable"></a>Iterable</h3><p>list, string, file这些可以用 for… in … 的都是iterable. 这种iterable会把内容一次性全部读进内存里，当文件很大时，就不适用了。</p>
+<h3 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h3><p>generators 也是一种iterable, 不同的是他只能loop over一次。generator没有一次性全部读进内存，而是当要执行的时候才会产生下一个值（lazy）.<br>下面的程序只是把[]变成了(), 就变成了一个generator.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mygenerator = (x*x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">3</span>))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> mygenerator:</span><br><span class="line">    print(i)</span><br><span class="line"><span class="comment"># 0</span></span><br><span class="line"><span class="comment"># 1</span></span><br><span class="line"><span class="comment"># 4</span></span><br></pre></td></tr></table></figure>
+<h3 id="yield"><a href="#yield" class="headerlink" title="yield"></a>yield</h3><p>yield也是一种generator, 但是它是有返回值的。yield用法就像return, 但是他会return一个generator.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">createGenerator</span><span class="params">()</span>:</span></span><br><span class="line">    mylist = range(<span class="number">3</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> mylist:</span><br><span class="line">        <span class="keyword">yield</span> i*i</span><br><span class="line"></span><br><span class="line">mygenerator = createGenerator() <span class="comment"># create a generator</span></span><br><span class="line">print(mygenerator) <span class="comment"># mygenerator is an object!</span></span><br><span class="line"><span class="comment"># &lt;generator object createGenerator at 0xb7555c34&gt;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> mygenerator:</span><br><span class="line">    print(i)</span><br><span class="line"><span class="comment"># 0</span></span><br><span class="line"><span class="comment"># 1</span></span><br><span class="line"><span class="comment"># 4</span></span><br></pre></td></tr></table></figure>
+<p>在上面的简单的例子中，mygenerator=createGenerator()没有运行函数，而是create了一个generator object. 当for第一次去call mygenerator时，createGenerator这个函数会从头开始执行，直到遇到yield，会返回yield关键字后面跟着的参数，也就是第一个loop的值。当for再次call的时候，会继续执行循环，遇到yield时返回 i*i, 然后挂起，直到for 再次call. 当循环结束时，generator就会变成empty,for也就无法在调用了。</p>
+<h3 id="TODO：-iter-next-getitem"><a href="#TODO：-iter-next-getitem" class="headerlink" title="TODO： iter, next(), getitem"></a>TODO： <strong>iter</strong>, next(), <strong>getitem</strong></h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/09/tensorflow命名空间管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘晨晨">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刘二毛的窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/09/tensorflow命名空间管理/" itemprop="url">tensorflow命名空间管理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-09T15:08:01+08:00">
+                2018-08-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这篇归纳总结一下tensorflow中的命名空间管理</p>
+<h3 id="tf-variable-scope-和-tf-name-scope"><a href="#tf-variable-scope-和-tf-name-scope" class="headerlink" title="tf.variable_scope 和 tf.name_scope"></a>tf.variable_scope 和 tf.name_scope</h3><p>这两个函数在大部分情况下是等价的，唯一的区别是在使用tf.get_variable的时候，tf.get_variable声明的变量的名称不受tf.name_scope的影响。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">"foo"</span>):</span><br><span class="line">  a = tf.get_variable(<span class="string">"bar"</span>, [<span class="number">1</span>]) <span class="comment"># get_variable必须填一个name</span></span><br><span class="line">  print(a.name) <span class="comment"># 输出: foo/bar:0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">"bar"</span>):</span><br><span class="line">  b = tf.get_variable(<span class="string">"bar"</span>, [<span class="number">1</span>]) <span class="comment"># 并不冲突，因为命名是 bar/bar</span></span><br><span class="line">  print(b.name) <span class="comment"># 输出： bar/bar:0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.name_scope(<span class="string">'a'</span>):</span><br><span class="line">  a = tf.Variable([<span class="number">1</span>])</span><br><span class="line">  print(a.name) <span class="comment"># 输出： a/Variable</span></span><br><span class="line">  a = tf.get_variable(<span class="string">'b'</span>, [<span class="number">1</span>])</span><br><span class="line">  print(a.name) <span class="comment"># 输出： b:0 不受name_scope的影响</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.name_scope(<span class="string">"b"</span>):</span><br><span class="line">  tf.get_variable(<span class="string">'b'</span>, [<span class="number">1</span>])</span><br><span class="line">  <span class="comment"># 会报错，因为tf.get_variable不受tf.name_scope的影响，而名称是"b"的变量上面已经声明过，这里会报重复声明的错误。</span></span><br></pre></td></tr></table></figure>
+<p>以后就只用一个就好了，免得混淆。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/09/tensorflow几个反人类的api/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘晨晨">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刘二毛的窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/09/tensorflow几个反人类的api/" itemprop="url">tensorflow几个api</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-09T10:25:42+08:00">
+                2018-08-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近在用tensorflow训练神经网络，这篇记录遇见的坑。</p>
+<h3 id="tf-argmax-input-axis-None-name-None-dimension-None"><a href="#tf-argmax-input-axis-None-name-None-dimension-None" class="headerlink" title="tf.argmax(input, axis=None, name=None, dimension=None)"></a>tf.argmax(input, axis=None, name=None, dimension=None)</h3><p>aixs=0表示求列的最大值，axis=1表示求行的最大值。<br>&nbsp;<br>这个函数axis有点反直觉，axis=0,表示你要在row这个方向上压缩，也就是说压缩后的shape应该是[1, columns],返回的是每一列的最大元素的下标。axis=1表示要在列这个维度压缩，返回的是每一行最大元素的下标。<br>&nbsp;<br>这个可能有点反直觉，但是跟tf.reduce_max是一致的。<br>&nbsp;<br>For vectors, use axis = 0. axis=-1意思是最后一个维度。</p>
+<h2 id=""><a href="#" class="headerlink" title="#"></a>#</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/04/lsi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘晨晨">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刘二毛的窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/04/lsi/" itemprop="url">LSA(LSI) 主题模型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-04T00:47:37+08:00">
+                2018-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="LSI-主题模型"><a href="#LSI-主题模型" class="headerlink" title="LSI 主题模型"></a>LSI 主题模型</h3><p>最近在做文本的聚类，探索的过程中遇到了lSI模型，在此记录。<br>在训练模型之前，先做了一些预处理工作，包括替换url，数字，标点, tokenize, 停用词去掉,然后词干化，再去掉低频词（在整个corpora中只出现过一次的），最后还剩下1200多个tokens，算是比较纯净的tokens。没有用tf-idf过滤，因为在我工作的具体场景中很多高频词不能过滤掉，是识别意图的关键。这些token也可以看做关键词了，基本一个短文本的token不会超过5个。<br>&nbsp;</p>
+<h3 id="LSI-原理"><a href="#LSI-原理" class="headerlink" title="LSI 原理"></a>LSI 原理</h3><p>在自然语言中，有很多同义词和多义词，如果用传统的encoding，这些词很难被关联起来。LSI根据词出现的位置相同来关联两个词的语义（这一点类似word2vec, 而且lsi模型很老了，可能用word2vec效果会更好，不过我还没有去试验）。LSI的核心就是SVD分解。请参考<a href="http://www1.se.cuhk.edu.hk/~seem5680/lecture/LSI-Eg.pdf" title="example" target="_blank" rel="noopener">一个简单的例子</a>.<br>&nbsp;<br>假设有m个token, n个doc, 把doc的向量按列拼起来得到一个矩阵$M_{m\times n}$,<br>通过 <script type="math/tex">M_{m\times n} \approx U_{m\times k} \Sigma_{k \times k} V_{n\times k}^T</script>,<br>把m维的向量压缩成k维。</p>
+<script type="math/tex; mode=display">V^T = \Sigma^{-1}U^TM</script><script type="math/tex; mode=display">V = M^TU\Sigma^{-1}</script><p>其中, $M^T$ 是文本，所以新来的文本要获得lsi向量，可以通过乘以一个变换 $U\Sigma^{-1}$ 得到。<script type="math/tex">q = q^T U_k \Sigma_k^{-1}</script><br>然后两两计算文本的余弦相似度，大于某个阈值就认为它们是一类的。<br>&nbsp;</p>
+<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>用到了python的gensim库来训练LSI模型，查到资料说一般 k(number pf topics)取 200到500之间会有比较好的效果。实验的时候取了300.<br>下面上代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gensim</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment"># token_dict是一个doc_id : doc_tokens 的dictionary， doc_tokens是一个文本的token_list, 不分顺序。</span></span><br><span class="line"><span class="comment"># 为了保证顺序和doc的编号</span></span><br><span class="line">token_keys = sorted(token_dict.keys())</span><br><span class="line">token_list = []</span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> token_keys:</span><br><span class="line">    token_list.append(token_dict[key])</span><br><span class="line"></span><br><span class="line">dictionary = gensim.corpora.Dictionary(token_list)</span><br><span class="line">corpus = [dictionary.doc2bow(tokens) <span class="keyword">for</span> tokens im token_list]</span><br><span class="line"></span><br><span class="line">lsi = gensim.models.lsimodel.LsiModel(corpus=corpus, id2word=dictionary, num_topics=<span class="number">300</span>)</span><br><span class="line">idx = gensim.similarities.MatrixSimilarity(lsi[corpus])</span><br><span class="line">vec_lsi = lsi[corpus]</span><br><span class="line">sims = list(idx[vec_lsi])</span><br><span class="line"></span><br><span class="line"><span class="comment"># cluster</span></span><br><span class="line">token_group_record = np.zeros(len(token_keys))</span><br><span class="line">threshold = <span class="number">0.7</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(sims)):</span><br><span class="line">    <span class="keyword">if</span> token_group_record[i]:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    token_group_record[i] = <span class="number">1</span></span><br><span class="line">    logger.info(<span class="string">"Cluster Group for -- %d --%s"</span>%(token_keys[i],      token_list[i]))</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(i, len(sims)):</span><br><span class="line">        <span class="keyword">if</span> token_group_record[j]:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> sims[i][j] &gt; threshold:</span><br><span class="line">            logger.info(<span class="string">"Add to cluster -- %d --%s"</span> %(token_keys[j], token_list[j]))</span><br><span class="line">            token_group_record[j] = <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<p>一共有9000个文本，最后聚了4000多类，其中有3000个doc是自成一类。<br>如果有新的数据来了可以直接乘以原来分解得到的矩阵得到压缩后的向量，不需要重新训练，但是时间长了会降低模型的准确性。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/04/svd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘晨晨">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刘二毛的窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/04/svd/" itemprop="url">SVD 奇异值分解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-04T00:47:37+08:00">
+                2018-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="SVD-奇异值分解"><a href="#SVD-奇异值分解" class="headerlink" title="SVD 奇异值分解"></a>SVD 奇异值分解</h3><p>一般方阵可以进行特征值分解，对于不是方阵的矩阵，可以进行奇异值分解. SVD将一个一般的矩阵分解为3个更简单的矩阵相乘。<br>&nbsp;<br>对二维矩阵$M$而言，我们可以找到一组标准正交基$v_1$, $v_2$使得 $Mv_1$和$Mv_2$是正交的。这里用另一组正交基  $u_1$ $u_2$表示 $Mv_1$,$Mv_2$的方向。</p>
+<script type="math/tex; mode=display">Mv_1 = \sigma_1 u_1</script><script type="math/tex; mode=display">Mv_2 = \sigma_2 u_2</script><p>对于任意一个向量 $x$, 它在 $v_1, v_2$这组正交基下可以表现为: <script type="math/tex">x = (v_1\cdot x) v_1 + (v_2 \cdot x) v_2</script>. 其中 $v_1\cdot x$和$v_2 \cdot x$分别表示 $x$在$v_1$方向和$v_2$方向上的投影。从而：</p>
+<script type="math/tex; mode=display">Mx = M((v_1\cdot x) v_1 + (v_2 \cdot x) v_2)</script><script type="math/tex; mode=display">Mx = (Mv_1)(v1\cdot x) + (Mv_2)(v_2 \cdot x)</script><script type="math/tex; mode=display">Mx = (\sigma_1 u_1 v_1^T + \sigma_2 u_2 v_2^T) x</script><script type="math/tex; mode=display">M = \sigma_1 u_1 v_1^T + \sigma_2 u_2 v_2^T</script><script type="math/tex; mode=display">M = \begin{bmatrix}u_1 & u_2 \end{bmatrix}\begin{bmatrix}\sigma1 & 0 \\ 0 & \sigma_2 \end{bmatrix}\begin{bmatrix}v_1^T \\ v_2^T \end{bmatrix}</script><script type="math/tex; mode=display">\therefore M = U \Sigma V^T</script><p>其中， $U$是由标准正交基$u_1$和$u_2$组成， $\Sigma$是由奇异值$\sigma_1$, $\sigma_2$组成，$V$是由另一组标准正交基 $v_1$，$v_2$组成。<br>&nbsp;<br>这里套用一段别人的总结： $M = U \Sigma V^T$ 表示，矩阵$M$的作用是将一个向量从$V$这组正交基映射到$U$, 并在各个方向上按照奇异值$\Sigma$做了伸缩。<br>&nbsp;<br>对于任意一个不是方阵的矩阵$M$而言：</p>
+<script type="math/tex; mode=display">M^T M = V \Sigma^T U^T U \Sigma V^T = V \Sigma^T \Sigma V^T</script><script type="math/tex; mode=display">MM^T = U \Sigma V^T V \Sigma^T U^T = U \Sigma \Sigma^T U^T</script><p>所以 $V$是$M^TM$的特征向量， $U$是$MM^T$的特征向量。$\Sigma^T\Sigma$是对角阵，值为$\sigma^2$.<br>&nbsp;<br>对于一个$m\times n$的矩阵$M$而言，存在以下的SVD分解,</p>
+<script type="math/tex; mode=display">M_{m\times n} = U_{m\times m} \Sigma_{m\times n}V_{n\times n}^T</script><p>其中$\Sigma$的对角值是$MM^T$的特征值的平方根, 并按照从大到小排序。按照平方占比大于某个阈值的标准，可以挑选出top k 个重要的特征，从而达到降维的目的, 从 $m$ 降到 $k$。</p>
+<script type="math/tex; mode=display">M_{m\times n} \approx U_{m\times k} \Sigma_{k \times k} V_{n\times k}^T</script>
           
         
       
@@ -390,7 +1155,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T08:47:37-04:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T20:47:37+08:00">
                 2018-07-16
               </time>
             
@@ -483,253 +1248,6 @@ f(\begin{bmatrix}x_0 & y_0\end{bmatrix}) +
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/16/hello/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘晨晨">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="刘二毛的窝">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/16/hello/" itemprop="url">hello</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T03:47:35-04:00">
-                2018-07-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/16/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="刘晨晨">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="刘二毛的窝">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/16/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T03:33:52-04:00">
-                2018-07-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -776,7 +1294,7 @@ f(\begin{bmatrix}x_0 & y_0\end{bmatrix}) +
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -808,19 +1326,23 @@ f(\begin{bmatrix}x_0 & y_0\end{bmatrix}) +
               
               
                 <li>
-                  <a href="/2018/07/16/test/" title="test" target="_blank">test</a>
+                  <a href="/2018/09/15/tf-idf/" title="TF-IDF" target="_blank">TF-IDF</a>
                 </li>
               
                 <li>
-                  <a href="/2018/07/16/Hessian矩阵/" title="Hessian矩阵" target="_blank">Hessian矩阵</a>
+                  <a href="/2018/09/01/logistic-regression/" title="logistic_regression" target="_blank">logistic_regression</a>
                 </li>
               
                 <li>
-                  <a href="/2018/07/16/hello/" title="hello" target="_blank">hello</a>
+                  <a href="/2018/08/14/yield/" title="Python yield 关键字" target="_blank">Python yield 关键字</a>
                 </li>
               
                 <li>
-                  <a href="/2018/07/16/hello-world/" title="Hello World" target="_blank">Hello World</a>
+                  <a href="/2018/08/09/tensorflow命名空间管理/" title="tensorflow命名空间管理" target="_blank">tensorflow命名空间管理</a>
+                </li>
+              
+                <li>
+                  <a href="/2018/08/09/tensorflow几个反人类的api/" title="tensorflow几个api" target="_blank">tensorflow几个api</a>
                 </li>
               
             </ul>
@@ -846,7 +1368,7 @@ f(\begin{bmatrix}x_0 & y_0\end{bmatrix}) +
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

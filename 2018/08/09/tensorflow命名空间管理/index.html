@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="这篇归纳总结一下tensorflow中的命名空间管理 tf.variable_scope 和 tf.name_scope这两个函数在大部分情况下是等价的，唯一的区别是在使用tf.get_variable的时候，tf.get_variable声明的变量的名称不受tf.name_scope的影响。 12345678910111213141516171819import tensorflow as tf">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2018/07/16/hello-world/index.html">
+<meta property="og:title" content="tensorflow命名空间管理">
+<meta property="og:url" content="http://yoursite.com/2018/08/09/tensorflow命名空间管理/index.html">
 <meta property="og:site_name" content="刘二毛的窝">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="这篇归纳总结一下tensorflow中的命名空间管理 tf.variable_scope 和 tf.name_scope这两个函数在大部分情况下是等价的，唯一的区别是在使用tf.get_variable的时候，tf.get_variable声明的变量的名称不受tf.name_scope的影响。 12345678910111213141516171819import tensorflow as tf">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-07-16T07:33:52.047Z">
+<meta property="og:updated_time" content="2018-08-12T14:02:33.493Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="tensorflow命名空间管理">
+<meta name="twitter:description" content="这篇归纳总结一下tensorflow中的命名空间管理 tf.variable_scope 和 tf.name_scope这两个函数在大部分情况下是等价的，唯一的区别是在使用tf.get_variable的时候，tf.get_variable声明的变量的名称不受tf.name_scope的影响。 12345678910111213141516171819import tensorflow as tf">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/07/16/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/09/tensorflow命名空间管理/"/>
 
 
 
 
 
-  <title>Hello World | 刘二毛的窝</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>tensorflow命名空间管理 | 刘二毛的窝</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -232,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/16/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/09/tensorflow命名空间管理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="刘晨晨">
@@ -249,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">tensorflow命名空间管理</h1>
         
 
         <div class="post-meta">
@@ -261,8 +261,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T03:33:52-04:00">
-                2018-07-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-09T15:08:01+08:00">
+                2018-08-09
               </time>
             
 
@@ -299,15 +299,10 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>这篇归纳总结一下tensorflow中的命名空间管理</p>
+<h3 id="tf-variable-scope-和-tf-name-scope"><a href="#tf-variable-scope-和-tf-name-scope" class="headerlink" title="tf.variable_scope 和 tf.name_scope"></a>tf.variable_scope 和 tf.name_scope</h3><p>这两个函数在大部分情况下是等价的，唯一的区别是在使用tf.get_variable的时候，tf.get_variable声明的变量的名称不受tf.name_scope的影响。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">"foo"</span>):</span><br><span class="line">  a = tf.get_variable(<span class="string">"bar"</span>, [<span class="number">1</span>]) <span class="comment"># get_variable必须填一个name</span></span><br><span class="line">  print(a.name) <span class="comment"># 输出: foo/bar:0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">"bar"</span>):</span><br><span class="line">  b = tf.get_variable(<span class="string">"bar"</span>, [<span class="number">1</span>]) <span class="comment"># 并不冲突，因为命名是 bar/bar</span></span><br><span class="line">  print(b.name) <span class="comment"># 输出： bar/bar:0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.name_scope(<span class="string">'a'</span>):</span><br><span class="line">  a = tf.Variable([<span class="number">1</span>])</span><br><span class="line">  print(a.name) <span class="comment"># 输出： a/Variable</span></span><br><span class="line">  a = tf.get_variable(<span class="string">'b'</span>, [<span class="number">1</span>])</span><br><span class="line">  print(a.name) <span class="comment"># 输出： b:0 不受name_scope的影响</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.name_scope(<span class="string">"b"</span>):</span><br><span class="line">  tf.get_variable(<span class="string">'b'</span>, [<span class="number">1</span>])</span><br><span class="line">  <span class="comment"># 会报错，因为tf.get_variable不受tf.name_scope的影响，而名称是"b"的变量上面已经声明过，这里会报重复声明的错误。</span></span><br></pre></td></tr></table></figure>
+<p>以后就只用一个就好了，免得混淆。</p>
 
       
     </div>
@@ -332,14 +327,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/08/09/tensorflow几个反人类的api/" rel="next" title="tensorflow几个api">
+                <i class="fa fa-chevron-left"></i> tensorflow几个api
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/07/16/hello/" rel="prev" title="hello">
-                hello <i class="fa fa-chevron-right"></i>
+              <a href="/2018/08/14/yield/" rel="prev" title="Python yield 关键字">
+                Python yield 关键字 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -417,7 +416,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -449,19 +448,23 @@
               
               
                 <li>
-                  <a href="/2018/07/16/test/" title="test" target="_blank">test</a>
+                  <a href="/2018/09/15/tf-idf/" title="TF-IDF" target="_blank">TF-IDF</a>
                 </li>
               
                 <li>
-                  <a href="/2018/07/16/Hessian矩阵/" title="Hessian矩阵" target="_blank">Hessian矩阵</a>
+                  <a href="/2018/09/01/logistic-regression/" title="logistic_regression" target="_blank">logistic_regression</a>
                 </li>
               
                 <li>
-                  <a href="/2018/07/16/hello/" title="hello" target="_blank">hello</a>
+                  <a href="/2018/08/14/yield/" title="Python yield 关键字" target="_blank">Python yield 关键字</a>
                 </li>
               
                 <li>
-                  <a href="/2018/07/16/hello-world/" title="Hello World" target="_blank">Hello World</a>
+                  <a href="/2018/08/09/tensorflow命名空间管理/" title="tensorflow命名空间管理" target="_blank">tensorflow命名空间管理</a>
+                </li>
+              
+                <li>
+                  <a href="/2018/08/09/tensorflow几个反人类的api/" title="tensorflow几个api" target="_blank">tensorflow几个api</a>
                 </li>
               
             </ul>
@@ -483,7 +486,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#tf-variable-scope-和-tf-name-scope"><span class="nav-number">1.</span> <span class="nav-text">tf.variable_scope 和 tf.name_scope</span></a></li></ol></div>
             
 
           </div>
@@ -503,7 +506,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

@@ -79,14 +79,19 @@
 
 
 
+<meta name="description" content="tf-idf是搜索和提取关键词的常用技术，这里详细记录了tf-idf的公式意义 Term Frequency (TF) Weighting Idea: 如果在一个doc中，一个词出现更多次，那么这个词就更重要 Formulas: c(t, d) 表示在doc d中，词t出现的次数 Raw TF: TF(t, d) = c(t, d)   一般情况下我们需要平滑： Log TF: TF(t, d)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hello">
-<meta property="og:url" content="http://yoursite.com/2018/07/16/hello/index.html">
+<meta property="og:title" content="TF-IDF">
+<meta property="og:url" content="http://yoursite.com/2018/09/15/tf-idf/index.html">
 <meta property="og:site_name" content="刘二毛的窝">
+<meta property="og:description" content="tf-idf是搜索和提取关键词的常用技术，这里详细记录了tf-idf的公式意义 Term Frequency (TF) Weighting Idea: 如果在一个doc中，一个词出现更多次，那么这个词就更重要 Formulas: c(t, d) 表示在doc d中，词t出现的次数 Raw TF: TF(t, d) = c(t, d)   一般情况下我们需要平滑： Log TF: TF(t, d)">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-07-16T07:47:35.511Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/BellaLiu112/MarkDownPhotos/master/TF-Normalization.png">
+<meta property="og:updated_time" content="2018-09-15T14:15:56.157Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hello">
+<meta name="twitter:title" content="TF-IDF">
+<meta name="twitter:description" content="tf-idf是搜索和提取关键词的常用技术，这里详细记录了tf-idf的公式意义 Term Frequency (TF) Weighting Idea: 如果在一个doc中，一个词出现更多次，那么这个词就更重要 Formulas: c(t, d) 表示在doc d中，词t出现的次数 Raw TF: TF(t, d) = c(t, d)   一般情况下我们需要平滑： Log TF: TF(t, d)">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/BellaLiu112/MarkDownPhotos/master/TF-Normalization.png">
 
 
 
@@ -116,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/07/16/hello/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/15/tf-idf/"/>
 
 
 
 
 
-  <title>hello | 刘二毛的窝</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>TF-IDF | 刘二毛的窝</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -229,7 +234,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/16/hello/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/15/tf-idf/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="刘晨晨">
@@ -246,7 +251,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">hello</h1>
+          <h1 class="post-title" itemprop="name headline">TF-IDF</h1>
         
 
         <div class="post-meta">
@@ -258,8 +263,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T03:47:35-04:00">
-                2018-07-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-15T05:06:54+08:00">
+                2018-09-15
               </time>
             
 
@@ -296,7 +301,39 @@
       
 
       
-        
+        <p>tf-idf是搜索和提取关键词的常用技术，这里详细记录了tf-idf的公式意义</p>
+<h2 id="Term-Frequency-TF-Weighting"><a href="#Term-Frequency-TF-Weighting" class="headerlink" title="Term Frequency (TF) Weighting"></a>Term Frequency (TF) Weighting</h2><ul>
+<li>Idea: 如果在一个doc中，一个词出现更多次，那么这个词就更重要</li>
+<li>Formulas:<ul>
+<li>c(t, d) 表示在doc d中，词t出现的次数</li>
+<li>Raw TF: TF(t, d) = c(t, d)</li>
+</ul>
+</li>
+<li>一般情况下我们需要平滑：<ul>
+<li>Log TF: TF(t, d) = log(c(t, d) + 1)</li>
+<li>Maximum Frequency normalizarion:<script type="math/tex; mode=display">TF(t, d) = 0.5 + \frac{0.5 \cdot c(t, d)}{MaxFreq(d)}</script></li>
+<li>TF in Okapi/BM25:<script type="math/tex; mode=display">TF(t, d) = \frac{k \cdot c(t, d)}{c(t, d) + k(1 - b + b \cdot length(d) / avg\_dl)}</script>其中, k, b是可调节的参数，根据经验，k一般取值在1.2到2.0之间，b一般为0.75. avg_dl是这个doc collection里的平均文件长度</li>
+</ul>
+</li>
+</ul>
+<p>为什么需要平滑TF? 因为不同的doc长度不同，同一个词出现多次，后面出现的次数的信息量不如第一次出现多，所以我们一般需要惩罚长文本，但是又要避免过分惩罚</p>
+<p><img src="https://raw.githubusercontent.com/BellaLiu112/MarkDownPhotos/master/TF-Normalization.png" alt="TF Normalization"></p>
+<h2 id="Inverted-Document-Frequency-IDF-Weighting"><a href="#Inverted-Document-Frequency-IDF-Weighting" class="headerlink" title="Inverted Document Frequency (IDF) Weighting"></a>Inverted Document Frequency (IDF) Weighting</h2><ul>
+<li>Idea: 如果一个单词只出现在更少部分doc中，那么它含有更多信息</li>
+<li>Formula:<ul>
+<li><script type="math/tex; mode=display">IDF(t) = 1 + log(\frac{n}{k})</script>其中， n是一个collection中的doc数量，k是collection中出现过单词t的doc数量<br>每个词的IDF是和具体哪个doc无关的，而TF是有关的</li>
+</ul>
+</li>
+</ul>
+<h2 id="TF-IDF-Weighting"><a href="#TF-IDF-Weighting" class="headerlink" title="TF-IDF Weighting"></a>TF-IDF Weighting</h2><ul>
+<li>TF-IDF Weighting<ul>
+<li>weight(t, d) = TF(t, d) * IDF(t)</li>
+<li>Term is common in doc -&gt; high tf -&gt; high weight</li>
+<li>Term is rare in collection -&gt; high idf -&gt; high weight</li>
+</ul>
+</li>
+</ul>
+
       
     </div>
     
@@ -320,8 +357,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/16/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2018/09/01/logistic-regression/" rel="next" title="logistic_regression">
+                <i class="fa fa-chevron-left"></i> logistic_regression
               </a>
             
           </div>
@@ -329,10 +366,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/16/Hessian矩阵/" rel="prev" title="Hessian矩阵">
-                Hessian矩阵 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -384,8 +417,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -400,7 +442,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -432,19 +474,23 @@
               
               
                 <li>
-                  <a href="/2018/07/16/test/" title="test" target="_blank">test</a>
+                  <a href="/2018/09/15/tf-idf/" title="TF-IDF" target="_blank">TF-IDF</a>
                 </li>
               
                 <li>
-                  <a href="/2018/07/16/Hessian矩阵/" title="Hessian矩阵" target="_blank">Hessian矩阵</a>
+                  <a href="/2018/09/01/logistic-regression/" title="logistic_regression" target="_blank">logistic_regression</a>
                 </li>
               
                 <li>
-                  <a href="/2018/07/16/hello/" title="hello" target="_blank">hello</a>
+                  <a href="/2018/08/14/yield/" title="Python yield 关键字" target="_blank">Python yield 关键字</a>
                 </li>
               
                 <li>
-                  <a href="/2018/07/16/hello-world/" title="Hello World" target="_blank">Hello World</a>
+                  <a href="/2018/08/09/tensorflow命名空间管理/" title="tensorflow命名空间管理" target="_blank">tensorflow命名空间管理</a>
+                </li>
+              
+                <li>
+                  <a href="/2018/08/09/tensorflow几个反人类的api/" title="tensorflow几个api" target="_blank">tensorflow几个api</a>
                 </li>
               
             </ul>
@@ -456,6 +502,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Term-Frequency-TF-Weighting"><span class="nav-number">1.</span> <span class="nav-text">Term Frequency (TF) Weighting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inverted-Document-Frequency-IDF-Weighting"><span class="nav-number">2.</span> <span class="nav-text">Inverted Document Frequency (IDF) Weighting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TF-IDF-Weighting"><span class="nav-number">3.</span> <span class="nav-text">TF-IDF Weighting</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -470,7 +532,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -597,24 +659,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config("");
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="custom_mathjax_source">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
@@ -667,6 +712,43 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
   
 
 

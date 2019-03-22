@@ -79,20 +79,17 @@
 
 
 
-<meta name="description" content="Hessian矩阵是多元函数的二阶导数矩阵， 它表述了高维曲面上各个方向的梯度变化, 用来判断曲面在局部的凹凸性。 极大值点，极小值点，鞍点的一阶梯度都为0. 如果是正定矩阵，则临界点处是一个局部极小值 如果是负定矩阵，则临界点处是一个局部极大值 如果是不定矩阵，则临界点处不是极值  推导过程对一元函数f(x)来说，就极值而言，一阶导为0是极值点的必要但不充分条件，一阶导为0且二阶导非负是极小值的">
+<meta name="description" content="LSI 主题模型最近在做文本的聚类，探索的过程中遇到了lSI模型，在此记录。在训练模型之前，先做了一些预处理工作，包括替换url，数字，标点, tokenize, 停用词去掉,然后词干化，再去掉低频词（在整个corpora中只出现过一次的），最后还剩下1200多个tokens，算是比较纯净的tokens。没有用tf-idf过滤，因为在我工作的具体场景中很多高频词不能过滤掉，是识别意图的关键。这些t">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hessian矩阵">
-<meta property="og:url" content="http://yoursite.com/2018/07/16/Hessian矩阵/index.html">
+<meta property="og:title" content="LSA(LSI) 主题模型">
+<meta property="og:url" content="http://yoursite.com/2018/08/04/lsi/index.html">
 <meta property="og:site_name" content="刘二毛的窝">
-<meta property="og:description" content="Hessian矩阵是多元函数的二阶导数矩阵， 它表述了高维曲面上各个方向的梯度变化, 用来判断曲面在局部的凹凸性。 极大值点，极小值点，鞍点的一阶梯度都为0. 如果是正定矩阵，则临界点处是一个局部极小值 如果是负定矩阵，则临界点处是一个局部极大值 如果是不定矩阵，则临界点处不是极值  推导过程对一元函数f(x)来说，就极值而言，一阶导为0是极值点的必要但不充分条件，一阶导为0且二阶导非负是极小值的">
+<meta property="og:description" content="LSI 主题模型最近在做文本的聚类，探索的过程中遇到了lSI模型，在此记录。在训练模型之前，先做了一些预处理工作，包括替换url，数字，标点, tokenize, 停用词去掉,然后词干化，再去掉低频词（在整个corpora中只出现过一次的），最后还剩下1200多个tokens，算是比较纯净的tokens。没有用tf-idf过滤，因为在我工作的具体场景中很多高频词不能过滤掉，是识别意图的关键。这些t">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://raw.githubusercontent.com/BellaLiu112/MarkDownPhotos/master/Screen%20Shot%202018-07-16%20at%2009.10.27.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/BellaLiu112/MarkDownPhotos/master/Screen%20Shot%202018-07-16%20at%2009.10.09.png">
-<meta property="og:updated_time" content="2018-07-24T10:01:06.797Z">
+<meta property="og:updated_time" content="2018-08-03T08:57:07.625Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hessian矩阵">
-<meta name="twitter:description" content="Hessian矩阵是多元函数的二阶导数矩阵， 它表述了高维曲面上各个方向的梯度变化, 用来判断曲面在局部的凹凸性。 极大值点，极小值点，鞍点的一阶梯度都为0. 如果是正定矩阵，则临界点处是一个局部极小值 如果是负定矩阵，则临界点处是一个局部极大值 如果是不定矩阵，则临界点处不是极值  推导过程对一元函数f(x)来说，就极值而言，一阶导为0是极值点的必要但不充分条件，一阶导为0且二阶导非负是极小值的">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/BellaLiu112/MarkDownPhotos/master/Screen%20Shot%202018-07-16%20at%2009.10.27.png">
+<meta name="twitter:title" content="LSA(LSI) 主题模型">
+<meta name="twitter:description" content="LSI 主题模型最近在做文本的聚类，探索的过程中遇到了lSI模型，在此记录。在训练模型之前，先做了一些预处理工作，包括替换url，数字，标点, tokenize, 停用词去掉,然后词干化，再去掉低频词（在整个corpora中只出现过一次的），最后还剩下1200多个tokens，算是比较纯净的tokens。没有用tf-idf过滤，因为在我工作的具体场景中很多高频词不能过滤掉，是识别意图的关键。这些t">
 
 
 
@@ -122,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/07/16/Hessian矩阵/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/04/lsi/"/>
 
 
 
 
 
-  <title>Hessian矩阵 | 刘二毛的窝</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>LSA(LSI) 主题模型 | 刘二毛的窝</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -235,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/16/Hessian矩阵/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/04/lsi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="刘晨晨">
@@ -252,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hessian矩阵</h1>
+          <h1 class="post-title" itemprop="name headline">LSA(LSI) 主题模型</h1>
         
 
         <div class="post-meta">
@@ -264,8 +261,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T20:47:37+08:00">
-                2018-07-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-04T00:47:37+08:00">
+                2018-08-04
               </time>
             
 
@@ -302,24 +299,11 @@
       
 
       
-        <p>Hessian矩阵是多元函数的二阶导数矩阵， 它表述了高维曲面上各个方向的梯度变化, 用来判断曲面在局部的凹凸性。<br><img src="https://raw.githubusercontent.com/BellaLiu112/MarkDownPhotos/master/Screen%20Shot%202018-07-16%20at%2009.10.27.png" alt="Hessian矩阵"></p>
-<h3 id="极大值点，极小值点，鞍点的一阶梯度都为0"><a href="#极大值点，极小值点，鞍点的一阶梯度都为0" class="headerlink" title="极大值点，极小值点，鞍点的一阶梯度都为0."></a>极大值点，极小值点，鞍点的一阶梯度都为0.</h3><ul>
-<li>如果是正定矩阵，则临界点处是一个局部极小值</li>
-<li>如果是负定矩阵，则临界点处是一个局部极大值</li>
-<li>如果是不定矩阵，则临界点处不是极值<br><img src="https://raw.githubusercontent.com/BellaLiu112/MarkDownPhotos/master/Screen%20Shot%202018-07-16%20at%2009.10.09.png" alt="鞍点"></li>
-</ul>
-<h3 id="推导过程"><a href="#推导过程" class="headerlink" title="推导过程"></a>推导过程</h3><p>对一元函数f(x)来说，就极值而言，一阶导为0是极值点的必要但不充分条件，一阶导为0且二阶导非负是极小值的充要条件。因为有泰勒展开</p>
-<script type="math/tex; mode=display">f(x)=f(x_0)+f'(x_0)\cdot\text{d}x+\frac{1}{2}f''(x_0)\text{d}x^2</script><p>如果一阶导为0，二阶导非负，$\text{d}x$不论是多少，$f(x)$一定不比$f(x_0)$小。因为泰勒展开剩下的余项的和会小于第二项。<br>&nbsp;<br>对二元函数来说，</p>
-<script type="math/tex; mode=display">f(\begin{bmatrix}x & y\end{bmatrix}) =
-f(\begin{bmatrix}x_0 & y_0\end{bmatrix}) +
-\begin{bmatrix}\text{d}x & \text{d}y\end{bmatrix} \cdot \begin{bmatrix}f_x' \\ f_y' \end{bmatrix}
-+ \frac{1}{2} \begin{bmatrix}\text{d}x & \text{d}y\end{bmatrix} \cdot \begin{bmatrix}f_{xx}' & f_{xy}' \\ f_{yx}' & f_{yy}' \end{bmatrix} \cdot \begin{bmatrix}\text{d}x \\ \text{d}y\end{bmatrix}</script><p>从一元的情况类比过来，如果一阶导为0，是不是极小值完全取决于不同的, $\text{d}x$ $\text{d}y$下，能不能做到最后一项一直非负。只有对于任意$\Delta {\bf x}$, $\Delta {\bf x} {\bf H} \Delta {\bf x}^T$ 一直非负的情况，我们才能说这是极小值。如果$\Delta {\bf x} {\bf H} \Delta {\bf x}^T$一直非正，这就是极大值。如果它一会正一会负，就是鞍点。</p>
-<h3 id="Hessian矩阵的特征值"><a href="#Hessian矩阵的特征值" class="headerlink" title="Hessian矩阵的特征值"></a>Hessian矩阵的特征值</h3><p>Hessian矩阵的特征值就是形容其在该点附近特征向量方向的凹凸性，特征值越大，凸性越强。<br>对一阶梯度下降而言，<br>这里$\theta<em>{t+1} = \theta</em>{t} - \alpha \cdot g$.</p>
-<script type="math/tex; mode=display">g = f'(\theta_{t})</script><p>进一步泰勒展开，可以得到：</p>
-<script type="math/tex; mode=display">f'(\theta^* + \Delta\theta) \approx f'(\theta^* ) + g^T\Delta\theta + \frac{1}{2}(\Delta\theta)^T\cdot H\cdot(\Delta\theta)</script><p>把上面的式子当做二次函数对$\Delta\theta$求导，并且等于0，可以得到下面的结论：</p>
-<script type="math/tex; mode=display">\Delta\theta = - H^{-1}g</script><p>即：</p>
-<script type="math/tex; mode=display">x_{t+1} = x_{t} - H_{-1}g, g = f'(x_{t})</script><p>结合两个更新公式可知，Hessian矩阵起到了控制步长$\alpha = H^{-1}$的作用。简单粗暴点的说，Hessian矩阵的特征值控制了更新步长。<br>详细的，我们知道对实对称矩阵而言：$H = E\Lambda E^{T}$<br>其中，<script type="math/tex">E=\{e_{1}, e_{2},\dots,e_{n}\}</script> 是单位特征向量矩阵 $\Lambda$ 是对应特征值对角矩阵。</p>
-<script type="math/tex; mode=display">H^{-1}g = (E\Lambda E^{T})^{-1}g = E\Lambda^{-1}E^{T}g = \Sigma_{i}^{n}\frac{e_{i}^{T}g}{\lambda_{i}}e_{i}</script><p>可以看出，这里控制（每个特征方向）步长的，有两个东西：原来的一阶梯度和对应的Hessian矩阵特征值。所以很多用gradient descend算法进行分析时，经常会说Hessian矩阵特征值这东西。若特征值间差异巨大，则有些方向学习缓慢，有些不断波动，（二维情况就是经常看到的那种蛇形曲线…）这些现象也侧面说明了步长这东西。</p>
+        <h3 id="LSI-主题模型"><a href="#LSI-主题模型" class="headerlink" title="LSI 主题模型"></a>LSI 主题模型</h3><p>最近在做文本的聚类，探索的过程中遇到了lSI模型，在此记录。<br>在训练模型之前，先做了一些预处理工作，包括替换url，数字，标点, tokenize, 停用词去掉,然后词干化，再去掉低频词（在整个corpora中只出现过一次的），最后还剩下1200多个tokens，算是比较纯净的tokens。没有用tf-idf过滤，因为在我工作的具体场景中很多高频词不能过滤掉，是识别意图的关键。这些token也可以看做关键词了，基本一个短文本的token不会超过5个。<br>&nbsp;</p>
+<h3 id="LSI-原理"><a href="#LSI-原理" class="headerlink" title="LSI 原理"></a>LSI 原理</h3><p>在自然语言中，有很多同义词和多义词，如果用传统的encoding，这些词很难被关联起来。LSI根据词出现的位置相同来关联两个词的语义（这一点类似word2vec, 而且lsi模型很老了，可能用word2vec效果会更好，不过我还没有去试验）。LSI的核心就是SVD分解。请参考<a href="http://www1.se.cuhk.edu.hk/~seem5680/lecture/LSI-Eg.pdf" title="example" target="_blank" rel="noopener">一个简单的例子</a>.<br>&nbsp;<br>假设有m个token, n个doc, 把doc的向量按列拼起来得到一个矩阵$M_{m\times n}$,<br>通过 <script type="math/tex">M_{m\times n} \approx U_{m\times k} \Sigma_{k \times k} V_{n\times k}^T</script>,<br>把m维的向量压缩成k维。</p>
+<script type="math/tex; mode=display">V^T = \Sigma^{-1}U^TM</script><script type="math/tex; mode=display">V = M^TU\Sigma^{-1}</script><p>其中, $M^T$ 是文本，所以新来的文本要获得lsi向量，可以通过乘以一个变换 $U\Sigma^{-1}$ 得到。<script type="math/tex">q = q^T U_k \Sigma_k^{-1}</script><br>然后两两计算文本的余弦相似度，大于某个阈值就认为它们是一类的。<br>&nbsp;</p>
+<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>用到了python的gensim库来训练LSI模型，查到资料说一般 k(number pf topics)取 200到500之间会有比较好的效果。实验的时候取了300.<br>下面上代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gensim</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment"># token_dict是一个doc_id : doc_tokens 的dictionary， doc_tokens是一个文本的token_list, 不分顺序。</span></span><br><span class="line"><span class="comment"># 为了保证顺序和doc的编号</span></span><br><span class="line">token_keys = sorted(token_dict.keys())</span><br><span class="line">token_list = []</span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> token_keys:</span><br><span class="line">    token_list.append(token_dict[key])</span><br><span class="line"></span><br><span class="line">dictionary = gensim.corpora.Dictionary(token_list)</span><br><span class="line">corpus = [dictionary.doc2bow(tokens) <span class="keyword">for</span> tokens im token_list]</span><br><span class="line"></span><br><span class="line">lsi = gensim.models.lsimodel.LsiModel(corpus=corpus, id2word=dictionary, num_topics=<span class="number">300</span>)</span><br><span class="line">idx = gensim.similarities.MatrixSimilarity(lsi[corpus])</span><br><span class="line">vec_lsi = lsi[corpus]</span><br><span class="line">sims = list(idx[vec_lsi])</span><br><span class="line"></span><br><span class="line"><span class="comment"># cluster</span></span><br><span class="line">token_group_record = np.zeros(len(token_keys))</span><br><span class="line">threshold = <span class="number">0.7</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(sims)):</span><br><span class="line">    <span class="keyword">if</span> token_group_record[i]:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    token_group_record[i] = <span class="number">1</span></span><br><span class="line">    logger.info(<span class="string">"Cluster Group for -- %d --%s"</span>%(token_keys[i],      token_list[i]))</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(i, len(sims)):</span><br><span class="line">        <span class="keyword">if</span> token_group_record[j]:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> sims[i][j] &gt; threshold:</span><br><span class="line">            logger.info(<span class="string">"Add to cluster -- %d --%s"</span> %(token_keys[j], token_list[j]))</span><br><span class="line">            token_group_record[j] = <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<p>一共有9000个文本，最后聚了4000多类，其中有3000个doc是自成一类。<br>如果有新的数据来了可以直接乘以原来分解得到的矩阵得到压缩后的向量，不需要重新训练，但是时间长了会降低模型的准确性。</p>
 
       
     </div>
@@ -344,14 +328,18 @@ f(\begin{bmatrix}x_0 & y_0\end{bmatrix}) +
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/08/04/svd/" rel="next" title="SVD 奇异值分解">
+                <i class="fa fa-chevron-left"></i> SVD 奇异值分解
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/08/04/svd/" rel="prev" title="SVD 奇异值分解">
-                SVD 奇异值分解 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/08/09/tensorflow几个反人类的api/" rel="prev" title="tensorflow几个api">
+                tensorflow几个api <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -499,7 +487,7 @@ f(\begin{bmatrix}x_0 & y_0\end{bmatrix}) +
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#极大值点，极小值点，鞍点的一阶梯度都为0"><span class="nav-number">1.</span> <span class="nav-text">极大值点，极小值点，鞍点的一阶梯度都为0.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推导过程"><span class="nav-number">2.</span> <span class="nav-text">推导过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hessian矩阵的特征值"><span class="nav-number">3.</span> <span class="nav-text">Hessian矩阵的特征值</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#LSI-主题模型"><span class="nav-number">1.</span> <span class="nav-text">LSI 主题模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LSI-原理"><span class="nav-number">2.</span> <span class="nav-text">LSI 原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实践"><span class="nav-number">3.</span> <span class="nav-text">实践</span></a></li></ol></div>
             
 
           </div>
